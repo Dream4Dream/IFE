@@ -65,10 +65,12 @@
 					body.insertBefore(d,null);
 				break;
 				case 'left-out':
+					if(div.length<=0) return;
 					alert(div[0].innerText);
 					body.removeChild(div[0]);
 				break;
 				case 'right-out':
+					if(div.length<=0) return;
 					alert(div[div.length-1].innerText);
 					body.removeChild(div[div.length-1]);
 				break;
