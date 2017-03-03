@@ -77,10 +77,18 @@
 			}
 		}
 
-		//点击事件
+		//button点击事件
 		for(var i =0;i<btn.length;i++){
 			btn[i].addEventListener('click',function(){
 				dealEle(this.id);
+			});
+		}
+		
+		//div点击事件
+		for(var i=0;i<div.length;i++){
+			div[i].addEventListener('click',function(){
+				alert(this.innerText);
+				body.removeChild(this);
 			});
 		}
 
