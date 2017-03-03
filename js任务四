@@ -44,6 +44,7 @@
 			var text = getText(),
 				d = document.createElement('div'),
 				val = document.createTextNode(text);
+			if(!parseInt(text) && parseInt(text)!==0) return;
 			d.appendChild(val);
 			switch(id){
 				case 'left-in':
