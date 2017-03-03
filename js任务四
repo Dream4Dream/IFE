@@ -12,11 +12,15 @@
 			color: #fff;
 			font-weight: 900;
 		}
+		input{
+			-moz-appearance:textfield;
+			-webkit-appearance: none;
+		}
 	</style>
 </head>
 <body>
 
-	<input type="text" name="">
+	<input type="text" name="" placeholder="请输入数字">
 	<button id="left-in">左侧入</button>
 	<button id="right-in">右侧入</button>
 	&nbsp&nbsp&nbsp
@@ -36,21 +40,29 @@
 		//获取input输入的值
 		var getText = function(){
 			var text = document.getElementsByTagName('input')[0];
+			for(var i=0;i<text.value.length;i++){
+				if(! /\d/.exec(text.value[i])){
+					return null;
+				}
+			}
 			return text.value;
 		}
 
-		//进入的方法
+		//
+
+		//添加删除方块的方法
 		var dealEle = function(id){
 			var text = getText(),
 				d = document.createElement('div'),
 				val = document.createTextNode(text);
-			if(!parseInt(text) && parseInt(text)!==0) return;
 			d.appendChild(val);
 			switch(id){
 				case 'left-in':
+					if(!text) return;
 					body.insertBefore(d,div[0]);
 				break;
 				case 'right-in':
+					if(!text) return;
 					body.insertBefore(d,null);
 				break;
 				case 'left-out':
