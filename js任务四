@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div{
+			display: inline-block;
+			margin-right: 10px;
+			padding: 10px;
+			background-color: red;
+			color: #fff;
+			font-weight: 900;
+		}
+	</style>
+</head>
+<body>
+
+	<input type="text" name="">
+	<button id="left-in">左侧入</button>
+	<button id="right-in">右侧入</button>
+	&nbsp&nbsp&nbsp
+	<button id="left-out">左侧出</button>
+	<button id="right-out">右侧出</button><br/>
+	<div>10</div>
+	<div>5</div>
+	<div>66</div>
+	<div>31</div>
+	<div>22</div>
+
+	<script type="text/javascript">
+		var btn = document.getElementsByTagName('button'),
+			body = document.getElementsByTagName('body')[0],
+			div = document.getElementsByTagName('div');
+
+		//获取input输入的值
+		var getText = function(){
+			var text = document.getElementsByTagName('input')[0];
+			return text.value;
+		}
+
+		//进入的方法
+		var dealEle = function(id){
+			var text = getText(),
+				d = document.createElement('div'),
+				val = document.createTextNode(text);
+			d.appendChild(val);
+			switch(id){
+				case 'left-in':
+					body.insertBefore(d,div[0]);
+				break;
+				case 'right-in':
+					body.insertBefore(d,null);
+				break;
+				case 'left-out':
+					body.removeChild(div[0]);
+				break;
+				case 'right-out':
+					body.removeChild(div[div.length-1]);
+				break;
+			}
+		}
+
+		//点击事件
+		for(var i =0;i<btn.length;i++){
+			btn[i].addEventListener('click',function(){
+				dealEle(this.id);
+			});
+		}
+
+	</script>
+</body>
+</html>
