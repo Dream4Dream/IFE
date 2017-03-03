@@ -48,7 +48,6 @@
 			return text.value;
 		}
 
-		//
 
 		//添加删除方块的方法
 		var dealEle = function(id){
@@ -66,9 +65,11 @@
 					body.insertBefore(d,null);
 				break;
 				case 'left-out':
+					alert(div[0].innerText);
 					body.removeChild(div[0]);
 				break;
 				case 'right-out':
+					alert(div[div.length-1].innerText);
 					body.removeChild(div[div.length-1]);
 				break;
 			}
