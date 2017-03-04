@@ -47,14 +47,23 @@
 			}
 			return text.value;
 		}
+		
+		//删除事件
+		var delet = function(ele){
+			ele.addEventListener('click',function(){
+				alert(this.innerText);
+				body.removeChild(this);
+			});
+		}
 
 
-		//添加删除方块的方法
+		//添加删除的处理	
 		var dealEle = function(id){
 			var text = getText(),
 				d = document.createElement('div'),
 				val = document.createTextNode(text);
 			d.appendChild(val);
+			delet(d);
 			switch(id){
 				case 'left-in':
 					if(!text) return;
@@ -84,12 +93,9 @@
 			});
 		}
 		
-		//div点击事件
+		//为预置的div添加删除事件
 		for(var i=0;i<div.length;i++){
-			div[i].addEventListener('click',function(){
-				alert(this.innerText);
-				body.removeChild(this);
-			});
+			delet(div[i]);
 		}
 
 	</script>
