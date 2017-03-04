@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div{
+			display: inline-block;
+			margin-right: 10px;
+			padding: 10px;
+			background-color: red;
+			color: #fff;
+			font-weight: 900;
+		}
+		input{
+			-moz-appearance:textfield;
+			-webkit-appearance: none;
+		}
+	</style>
+</head>
+<body>
+
+	<input type="text" name="" placeholder="请输入数字">
+	<button id="left-in">左侧入</button>
+	<button id="right-in">右侧入</button>
+	&nbsp&nbsp&nbsp
+	<button id="left-out">左侧出</button>
+	<button id="right-out">右侧出</button>
+	<button id="sort">顺序排序</button><br/>
+	<span>这里是小尾巴~：</span><br/>
+
+
+	<script type="text/javascript">
+		var btn = document.getElementsByTagName('button'),
+			body = document.getElementsByTagName('body')[0],
+			div = document.getElementsByTagName('div'),
+			input = document.getElementsByTagName('input')[0];
+
+		//获取input输入的值
+		var getText = function(){
+			var input = document.getElementsByTagName('input')[0];
+			for(var i=0;i<input.value.length;i++){
+				if(! /\d/.exec(input.value[i])){
+					return null;
+				}
+			}
+			if(input.value>=10 && input.value<=100){
+				return input.value;
+			}
+		}
+
+		//div高度设置
+		var setHeight = function(ele){
+			var maxH = 150,
+				percent = input.value/100;
+			ele.style.height = percent*maxH+'px';
+		}
+
+
+		//删除事件
+		var delet = function(){
+			alert('小尾巴长度'+this.style.height);
+			body.removeChild(this);
+		}
+
+		//div数大于60时
+		var oversize = function(){
+			if(div.length >=60){
+				alert('小尾巴总数达到60，队列君拿不下啦...ಥ_ಥ');
+				return true;
+			}
+		}
+
+		//简陋快排
+		var quickSort = function(ems){
+			var len = ems.length;
+			if(len<=1){
+				return ems;
+			}
+			var	index = Math.floor((len-1)/2),
+				pivot = ems.splice(index,1),
+				left = [],
+				right = [];
+			for(var i=0;i<ems.length;i++){
+				if(parseFloat(ems[i].style.height)<parseFloat(pivot[0].style.height)){
+					left.push(ems[i]);
+				}else{
+					right.push(ems[i]);
+				}
+			}
+			return quickSort(left).concat(pivot,quickSort(right));
+		}
+
+		//排序按钮事件
+		var btnSort = function(){
+			var ems = document.getElementsByTagName('div');
+				arr = [];
+			if(ems.length <=0) return;
+			for(var i =0;i<ems.length;i++){
+				arr.push(ems[i]);
+			}
+			var dArr = quickSort(arr);
+			return dArr;
+		}
+
+		//创建dom
+		var addDom = function(){
+			d = document.createElement('div');
+			setHeight(d);
+			d.addEventListener('click',delet);
+		}
+
+		//添加删除的处理
+		var dealEle = function(id){
+			var text = getText();
+			addDom();
+			switch(id){
+				case 'left-in':
+					if(!text || oversize()) return;
+					body.insertBefore(d,div[0]);
+				break;
+				case 'right-in':
+					if(!text || oversize()) return;
+					body.insertBefore(d,null);
+				break;
+				case 'left-out':
+					if(div.length<=0) return;
+					delet.apply(div[0]);
+				break;
+				case 'right-out':
+					if(div.length<=0) return;
+					delet.apply(div[div.length-1]);
+				break;
+				case 'sort':
+					var hArr = btnSort(),
+						dLen = document.getElementsByTagName('div').length;
+					for(var j = dLen-1;j>=0;j--){
+						body.removeChild(div[j]);
+					}
+					for(var i = 0;i<hArr.length;i++){
+						body.insertBefore(hArr[i],null);
+					}
+				break;
+				default:
+					return;
+			}
+		}
+
+		//button点击事件
+		for(var i =0;i<btn.length;i++){
+			btn[i].addEventListener('click',function(){
+				dealEle(this.id);
+			});
+		}
+
+	</script>
+</body>
+</html>
